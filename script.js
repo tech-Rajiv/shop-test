@@ -50,6 +50,7 @@ confirm.addEventListener("click",function(){
       let newli = document.createElement("li")
        newli.id="createdli";
        newli.value= totalPrice;
+     
       let newspan = document.createElement("span")
       let deletespan = document.createElement('span')
       deletespan.innerText = " X "
@@ -60,6 +61,7 @@ confirm.addEventListener("click",function(){
      newli.classList.add("list-group-item-dark")
      newli.classList.add("d-flex")
      newli.classList.add("justify-content-between")
+     newli.classList.add("count")
      newspan.innerText =` ${totalPrice}`
      newspan.classList.add("text-success")
       newli.innerText = ` ${selectedItem}(${perItemPrice}) * ${quantity.value}Ps  = `
@@ -67,13 +69,22 @@ confirm.addEventListener("click",function(){
       quantity.value =1;
       newli.appendChild(deletespan)
       summary.appendChild(newli)
-      
+      count()
       calc(0)
       confirm.classList.add("disabled")
       slecetedItem="";
       
       
     })
+const countItems = document.querySelector('#totalItems')    
+function count(){
+  let countt = document.querySelectorAll('.count').length
+ // console.log(countt)
+  countItems.innerText = countt
+  
+} 
+    
+    
     //listening to delete the list added dynamically
 summary.addEventListener("click",function(e){
   //console.log("the target is ",e.target)
@@ -83,6 +94,7 @@ summary.addEventListener("click",function(e){
     // console.log("id is",n)
      e.target.parentNode.parentNode.removeChild(e.target.parentNode);
      let priceToDelete = e.target.parentNode.value;
+     count()
      calc(priceToDelete);
      //orders();
   }
@@ -107,17 +119,17 @@ function calc(e) {
 const disc = document.querySelector("#disc");
 const showbefore = document.querySelector("#beforeDiscount");   
   function discount(e){
-    console.log("rrr",e)
+    //console.log("rrr",e)
     let extraAmount = e-500
     showbefore.innerText = e
     //console.log("no disc")
     if (extraAmount >= 0){
       let tocut = e / 10
       disc.innerText = `- ₹${tocut} OFF`
-     console.log(tocut)
+     //console.log(tocut)
     // e = e - tocut;
     let priceafterdiscount = e - tocut;
-    console.log(priceafterdiscount)
+    //console.log(priceafterdiscount)
     // console.log("final",priceafterdiscount)
     finalPrice.innerText = priceafterdiscount;
   
@@ -154,6 +166,9 @@ addhistory.addEventListener("click",()=>{
   addhistory.innerText="done"
   addhistory.classList.add("disabled")
   alert("Added successfully!");
+  let tprice = document.createElement('h3')
+  tprice = finalPrice.innerText;
+  console.log("ttttt",tprice)
   setTimeout(()=>{
     addhistory.innerText ="Add History";
     addhistory.classList.remove("disabled")
@@ -176,15 +191,15 @@ addhistory.addEventListener("click",()=>{
  
   
   
- 
+ let details = summary.innerText;
   
-  let data = summary.innerText;
-  //console.log(data)
+  let data = `${tprice} zzz ${details}`;
+  console.log(data)
   let previous = JSON.parse(localStorage.getItem('getdata')) ||[];
   previous = previous.concat(data)
   localStorage.setItem('getdata',JSON.stringify(previous))
   //console.log(date)
   //console.log(summary.innerText)
   
-  window.location.reload();
+// window.location.reload();
 })
