@@ -201,5 +201,5 @@ addhistory.addEventListener("click",()=>{
   //console.log(date)
   //console.log(summary.innerText)
   
-// window.location.reload();
+  window.location.reload();
 })
